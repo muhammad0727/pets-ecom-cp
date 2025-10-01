@@ -18,20 +18,22 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.views.generic import TemplateView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('api/',include('base.urls')),
-    path('',TemplateView.as_view(template_name='index.html')),
-    path('api/products/',include('base.urls.product_urls')),
-    path('api/users/',include('base.urls.user_urls')),
-    path('api/orders/',include('base.urls.order_urls')),
+    # In a production environment where the frontend and backend are served separately,
+    # Django is no longer responsible for serving the React frontend.
+    # The following path is for a development environment where Django serves both.
+    # You can uncomment it if you want to run the frontend and backend on the same server.
+    # path('',TemplateView.as_view(template_name='index.html')),
+    path('api/products/',include('core.urls.product_urls')),
+    path('api/users/',include('core.urls.user_urls')),
+    path('api/orders/',include('core.urls.order_urls')),
     
 
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
-
